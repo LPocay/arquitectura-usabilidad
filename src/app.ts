@@ -16,6 +16,7 @@ export class App {
     console.log('2) Agregar TODO')
     console.log('3) Modificar TODO')
     console.log('4) Eliminar TODO')
+    console.log('5) Deshacer')
 
     const respuesta = await this.preguntar('Que quieres hacer?: ');
     this.factory[respuesta].ejecutar();
