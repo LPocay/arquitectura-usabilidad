@@ -10,6 +10,8 @@ export class VerTODOs implements Comando {
   }
 
   ejecutar() {
+    console.log('Ver todos mis TODOs')
+    console.log('-------------------------')
     const contenido = leerArchivo<TODO>(this.ruta);
     contenido.forEach((todo) => {
       console.log(`Titulo: ${todo.titulo}.  Estado: ${todo.estado}`);

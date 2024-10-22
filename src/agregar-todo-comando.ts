@@ -11,7 +11,8 @@ export class AgregarTODO implements Comando {
     }
 
     async ejecutar(): Promise<void> {
-        console.log('Vamos a crear un nuevo TODO')
+        console.log('Agregar un nuevo TODO')
+        console.log('-------------------------')
         const titulo = await pedirInputUsuario('Título: ')
         const TODO: TODO = {
             titulo: titulo,
