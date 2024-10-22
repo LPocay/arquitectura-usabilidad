@@ -2,4 +2,4 @@ import { App } from "./src/app";
 
 const app = new App();
 
-app.saludar();
+app.ejecutar();

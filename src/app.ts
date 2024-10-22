@@ -11,7 +11,7 @@ export class App {
   }
   constructor() { }
 
-  async saludar() {
+  async ejecutar() {
     console.log('Bienvenido a TODOapp')
     console.log('Que quieres hacer hoy?')
 
