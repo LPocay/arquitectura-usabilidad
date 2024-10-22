@@ -6,7 +6,7 @@ import {pedirInputUsuario} from "./consola";
 import {unlinkSync} from "fs";
 
 jest.mock('./consola', () => ({
-  preguntar: jest.fn(),
+  pedirInputUsuario: jest.fn(),
 }));
 
 const ruta: string = 'todo-test.json'
