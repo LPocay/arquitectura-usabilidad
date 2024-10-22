@@ -13,22 +13,23 @@ export class App {
 
   async ejecutar() {
     this.saludar();
-    this.mostrarMenuPrincipal();
+    await this.interactuarConElUsuario();
+  }
 
+  private async interactuarConElUsuario() {
     let salir = false;
 
-    while(!salir)
-    {
+    while (!salir) {
+      this.mostrarMenuPrincipal()
       const respuesta = await pedirInputUsuario('Que quieres hacer?: ');
-      console.log("\n".repeat(2))
 
+      console.log("\n".repeat(2))
       if (respuesta === "6") {
         salir = true;
         return;
-      }
 
+      }
       await this.factory[respuesta].ejecutar();
-      this.mostrarMenuPrincipal()
     }
   }
 
