@@ -1,10 +1,13 @@
-import { createInterface } from "readline"
-import { MapComandos } from "./types"
-import { VerTODOs } from "./ver-todo-comando"
+import {MapComandos} from "./types"
+import {VerTODOs} from "./ver-todo-comando"
+import {AgregarTODO} from "./agregar-todo-comando";
+import {preguntar} from "./consola";
 
 export class App {
-  factory: MapComandos = {
-    '1': new VerTODOs()
+  private readonly ruta = 'todos.json'
+  private readonly factory: MapComandos = {
+    '1': new VerTODOs(this.ruta),
+    '2': new AgregarTODO(this.ruta),
   }
   constructor() { }
 
@@ -18,22 +21,7 @@ export class App {
     console.log('4) Eliminar TODO')
     console.log('5) Deshacer')
 
-    const respuesta = await this.preguntar('Que quieres hacer?: ');
+    const respuesta = await preguntar('Que quieres hacer?: ');
     this.factory[respuesta].ejecutar();
   }
-
-  preguntar(pregunta: string): Promise<string> {
-    const rl = createInterface({
-      input: process.stdin,
-      output: process.stdout
-    })
-
-    return new Promise((resolve) => {
-      rl.question(pregunta, (respuesta) => {
-        rl.close();
-        resolve(respuesta);
-      })
-    })
-  }
-
 }
