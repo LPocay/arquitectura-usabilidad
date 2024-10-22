@@ -2,7 +2,7 @@ import {afterEach, describe, expect, jest, test} from '@jest/globals';
 import {leerArchivo} from "./util";
 import {TODO, TODOEstados} from "./types";
 import {AgregarTODO} from "./agregar-todo-comando";
-import {preguntar} from "./consola";
+import {pedirInputUsuario} from "./consola";
 import {unlinkSync} from "fs";
 
 jest.mock('./consola', () => ({
@@ -11,7 +11,7 @@ jest.mock('./consola', () => ({
 
 const ruta: string = 'todo-test.json'
 const unTitulo: string = 'Un titulo';
-const preguntarMock = preguntar as jest.MockedFunction<typeof preguntar>
+const preguntarMock = pedirInputUsuario as jest.MockedFunction<typeof pedirInputUsuario>
 
 afterEach(() => {
   unlinkSync(ruta);

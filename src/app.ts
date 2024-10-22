@@ -1,7 +1,7 @@
 import {MapComandos} from "./types"
 import {VerTODOs} from "./ver-todo-comando"
 import {AgregarTODO} from "./agregar-todo-comando";
-import {preguntar} from "./consola";
+import {pedirInputUsuario} from "./consola";
 
 export class App {
   private readonly ruta = 'todos.json'
@@ -21,7 +21,7 @@ export class App {
     console.log('4) Eliminar TODO')
     console.log('5) Deshacer')
 
-    const respuesta = await preguntar('Que quieres hacer?: ');
+    const respuesta = await pedirInputUsuario('Que quieres hacer?: ');
     this.factory[respuesta].ejecutar();
   }
 }
