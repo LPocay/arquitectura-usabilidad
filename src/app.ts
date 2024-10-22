@@ -15,19 +15,33 @@ export class App {
     this.saludar();
     this.mostrarMenuPrincipal();
 
-    const respuesta = await pedirInputUsuario('Que quieres hacer?: ');
+    let salir = false;
 
-    this.factory[respuesta].ejecutar();
+    while(!salir)
+    {
+      const respuesta = await pedirInputUsuario('Que quieres hacer?: ');
+      console.log("\n".repeat(2))
+
+      if (respuesta === "6") {
+        salir = true;
+        return;
+      }
+
+      await this.factory[respuesta].ejecutar();
+      this.mostrarMenuPrincipal()
+    }
   }
 
   private mostrarMenuPrincipal() {
+    console.log("\n")
     console.log('Que quieres hacer hoy?')
-    console.log('------')
+    console.log('-------------------------')
     console.log('1) Ver mi lista de TODOs')
     console.log('2) Agregar TODO')
     console.log('3) Modificar TODO')
     console.log('4) Eliminar TODO')
     console.log('5) Deshacer')
+    console.log('6) Salir')
   }
 
   private saludar() {
