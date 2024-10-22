@@ -12,7 +12,7 @@ export class App {
   constructor() { }
 
   async ejecutar() {
-    console.log('Bienvenido a TODOapp')
+    this.saludar();
     console.log('Que quieres hacer hoy?')
 
     console.log('1) Ver mi lista de TODOs')
@@ -23,5 +23,9 @@ export class App {
 
     const respuesta = await pedirInputUsuario('Que quieres hacer?: ');
     this.factory[respuesta].ejecutar();
+  }
+
+  private saludar() {
+    console.log('Bienvenido a TODOapp')
   }
 }
