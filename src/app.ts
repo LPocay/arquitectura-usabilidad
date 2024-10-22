@@ -13,16 +13,21 @@ export class App {
 
   async ejecutar() {
     this.saludar();
-    console.log('Que quieres hacer hoy?')
+    this.mostrarMenuPrincipal();
 
+    const respuesta = await pedirInputUsuario('Que quieres hacer?: ');
+
+    this.factory[respuesta].ejecutar();
+  }
+
+  private mostrarMenuPrincipal() {
+    console.log('Que quieres hacer hoy?')
+    console.log('------')
     console.log('1) Ver mi lista de TODOs')
     console.log('2) Agregar TODO')
     console.log('3) Modificar TODO')
     console.log('4) Eliminar TODO')
     console.log('5) Deshacer')
-
-    const respuesta = await pedirInputUsuario('Que quieres hacer?: ');
-    this.factory[respuesta].ejecutar();
   }
 
   private saludar() {
