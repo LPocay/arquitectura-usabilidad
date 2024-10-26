@@ -2,6 +2,7 @@ import { MapComandos } from "./types"
 import { VerTODOs } from "./ver-todo-comando"
 import { AgregarTODO } from "./agregar-todo-comando";
 import { EliminarTODOs } from "./eliminar-todo-comando";
+import { MoficarTODOs } from "./modificar-todo-comando";
 import { pedirInputUsuario } from "./consola";
 
 export class App {
@@ -9,6 +10,7 @@ export class App {
   private readonly factory: MapComandos = {
     '1': new VerTODOs(this.ruta),
     '2': new AgregarTODO(this.ruta),
+    '3': new MoficarTODOs(this.ruta),
     '4': new EliminarTODOs(this.ruta),
   }
   constructor() { }

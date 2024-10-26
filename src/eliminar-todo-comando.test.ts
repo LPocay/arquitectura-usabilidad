@@ -21,24 +21,24 @@ describe('Eliminar TODOs', () => {
   afterEach(() => {
     unlinkSync(ruta);
   })
-  test('Eliminar TODO de lista de TODO', () => {
+  test('Eliminar TODO de lista de TODO', async () => {
     const comandoAgregar = new AgregarTODO(ruta);
     preguntarMock.mockResolvedValue("Test todo");
-    comandoAgregar.ejecutar()
+    await comandoAgregar.ejecutar()
 
     const comandoEliminar = new EliminarTODOs(ruta);
 
     preguntarMock.mockResolvedValue("1");
-    comandoEliminar.ejecutar();
+    await comandoEliminar.ejecutar();
 
     const todosModificados = leerArchivo(ruta);
     expect(todosModificados.length).toEqual(0);
   });
 
-  test('Eliminar TODO de lista con indice invalido', () => {
+  test('Eliminar TODO de lista con indice invalido', async () => {
     const comandoAgregar = new AgregarTODO(ruta);
     preguntarMock.mockResolvedValue("Test todo");
-    comandoAgregar.ejecutar()
+    await comandoAgregar.ejecutar()
 
     const comandoEliminar = new EliminarTODOs(ruta);
 

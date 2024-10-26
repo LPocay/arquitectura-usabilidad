@@ -17,7 +17,7 @@ export class EliminarTODOs implements Comando {
     })
     const indice = await pedirInputUsuario('TODO: ')
     const indice_eliminar = parseInt(indice, 10) - 1;
-    if (indice_eliminar < 0 || indice_eliminar > totalTODOs) {
+    if (indice_eliminar < 0 || indice_eliminar > totalTODOs - 1) {
       throw new Error("Indice invalido");
     }
     const todosModificados = todos.filter((_, i) => i !== indice_eliminar);
