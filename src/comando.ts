@@ -1,3 +1,3 @@
-export class Comando {
-  ejecutar() { }
+export interface Comando {
+  ejecutar(): void;
 }
