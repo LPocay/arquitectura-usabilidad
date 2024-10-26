@@ -1,10 +1,30 @@
-import { describe, expect, test } from '@jest/globals';
+import {afterEach, describe, expect, jest, test} from '@jest/globals';
+import {leerArchivo} from "./util";
+import {TODO, TODOEstados} from "./types";
+import {AgregarTODO} from "./agregar-todo-comando";
+import {pedirInputUsuario} from "./consola";
+import {unlinkSync} from "fs";
 
-function sum(a: number, b: number) {
-  return a + b;
-}
-describe('sum module', () => {
-  test('adds 1 + 2 to equal 3', () => {
-    expect(sum(1, 2)).toBe(3);
-  });
-});
+jest.mock('./consola', () => ({
+  pedirInputUsuario: jest.fn(),
+}));
+
+const ruta: string = 'todo-test.json'
+const unTitulo: string = 'Un titulo';
+const preguntarMock = pedirInputUsuario as jest.MockedFunction<typeof pedirInputUsuario>
+
+afterEach(() => {
+  unlinkSync(ruta);
+})
+
+describe('agregar todo', () => {
+  test('debería agregar un TODO a la lista de TODOs', async () => {
+    preguntarMock.mockResolvedValue(unTitulo)
+
+    await new AgregarTODO(ruta).ejecutar();
+
+    const listaDeTODOs = leerArchivo<TODO>(ruta);
+    expect(listaDeTODOs[0].titulo).toBe(unTitulo);
+    expect(listaDeTODOs[0].estado).toBe(TODOEstados.SinEmpezar);
+  })
+})
