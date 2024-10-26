@@ -22,3 +22,7 @@ export function escribirArchivo<T>(ruta: string, TODO: TODO): void {
 
   writeFileSync(ruta, JSON.stringify(data, null, 2), 'utf-8');
 }
+
+export function eliminarTODO<T>(ruta: string, TODO: TODO[]): void {
+  writeFileSync(ruta, JSON.stringify(TODO, null, 2), 'utf-8');
+}

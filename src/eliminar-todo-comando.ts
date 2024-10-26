@@ -1,13 +1,26 @@
 import { Comando } from './comando';
-import { TODO } from './types';
+import { pedirInputUsuario } from './consola';
+import { eliminarTODO, leerArchivo } from './util';
 
 export class EliminarTODOs implements Comando {
-  ejecutar(todos: TODO[], indice_eliminar: number): TODO[] {
+  ruta: string;
+  constructor(ruta: string) {
+    this.ruta = ruta;
+  }
+  async ejecutar(): Promise<void> {
+    const todos = leerArchivo(this.ruta);
     const totalTODOs = todos.length;
-    if (indice_eliminar < 0 || indice_eliminar > totalTODOs - 1) {
+    console.log('Eliminar TODO')
+    console.log('-------------------------')
+    todos.forEach((todo, indice) => {
+      console.log(`${indice + 1}) ${todo.titulo} - ${todo.estado}`)
+    })
+    const indice = await pedirInputUsuario('TODO: ')
+    const indice_eliminar = parseInt(indice, 10) - 1;
+    if (indice_eliminar < 0 || indice_eliminar > totalTODOs) {
       throw new Error("Indice invalido");
     }
     const todosModificados = todos.filter((_, i) => i !== indice_eliminar);
-    return todosModificados;
+    eliminarTODO(this.ruta, todosModificados);
   }
 }

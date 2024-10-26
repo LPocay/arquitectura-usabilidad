@@ -1,40 +1,51 @@
-import { describe, expect, test } from '@jest/globals';
+import { afterEach, describe, expect, jest, test } from '@jest/globals';
 import { EliminarTODOs } from './eliminar-todo-comando';
-import { TODO, TODOEstados } from './types';
+import { AgregarTODO } from './agregar-todo-comando';
+import { pedirInputUsuario } from './consola';
+import { leerArchivo } from './util';
+import { unlinkSync } from 'fs';
+import { beforeEach } from 'node:test';
 
+
+jest.mock('./consola', () => ({
+  pedirInputUsuario: jest.fn(),
+}));
+const preguntarMock = pedirInputUsuario as jest.MockedFunction<typeof pedirInputUsuario>
+const ruta = 'todo_test.json';
 
 describe('Eliminar TODOs', () => {
 
+  beforeEach(() => {
+    unlinkSync(ruta);
+  })
+  afterEach(() => {
+    unlinkSync(ruta);
+  })
   test('Eliminar TODO de lista de TODO', () => {
-    const todos: TODO[] = [
-      {
-        titulo: "Primer TODO",
-        estado: TODOEstados.SinEmpezar,
-      }
-    ];
-    const comandoEliminar = new EliminarTODOs();
-    const indice_eliminar = 0;
+    const comandoAgregar = new AgregarTODO(ruta);
+    preguntarMock.mockResolvedValue("Test todo");
+    comandoAgregar.ejecutar()
 
-    const todosModificado = comandoEliminar.ejecutar(todos, indice_eliminar);
-    expect(todosModificado.length).toEqual(0);
+    const comandoEliminar = new EliminarTODOs(ruta);
+
+    preguntarMock.mockResolvedValue("1");
+    comandoEliminar.ejecutar();
+
+    const todosModificados = leerArchivo(ruta);
+    expect(todosModificados.length).toEqual(0);
   });
 
   test('Eliminar TODO de lista con indice invalido', () => {
-    const todos: TODO[] = [
-      {
-        titulo: "Primer TODO",
-        estado: TODOEstados.SinEmpezar,
-      }
-    ];
-    const comandoEliminar = new EliminarTODOs();
-    let indice_eliminar = 1;
+    const comandoAgregar = new AgregarTODO(ruta);
+    preguntarMock.mockResolvedValue("Test todo");
+    comandoAgregar.ejecutar()
 
-    let funcionTest = () => comandoEliminar.ejecutar(todos, indice_eliminar);
-    expect(funcionTest).toThrowError("Indice invalido");
+    const comandoEliminar = new EliminarTODOs(ruta);
 
-    indice_eliminar = -1;
+    preguntarMock.mockResolvedValue("2");
+    expect(comandoEliminar.ejecutar()).rejects.toThrowError("Indice invalido");
 
-    funcionTest = () => comandoEliminar.ejecutar(todos, indice_eliminar);
-    expect(funcionTest).toThrowError("Indice invalido");
+    preguntarMock.mockResolvedValue("-1");
+    expect(comandoEliminar.ejecutar()).rejects.toThrowError("Indice invalido");
   });
 });
