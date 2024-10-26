@@ -1,12 +1,14 @@
 import { Comando } from './comando';
 import { pedirInputUsuario } from './consola';
-import { TODO, TODOEstados } from './types';
-import { eliminarTODO, leerArchivo } from './util';
+import { Accion, TODO, TODOEstados } from './types';
+import { reescribirTODOs, leerArchivo } from './util';
 
-export class MoficarTODOs implements Comando {
+export class ModificarTODOs implements Comando {
   ruta: string;
-  constructor(ruta: string) {
+  acciones: Accion[];
+  constructor(ruta: string, acciones: Accion[]) {
     this.ruta = ruta;
+    this.acciones = acciones;
   }
   async ejecutar(): Promise<void> {
     const todos = leerArchivo(this.ruta);
@@ -24,7 +26,7 @@ export class MoficarTODOs implements Comando {
 
     const nuevoTitulo = await this.pedirTitulo();
     const nuevoEstado = await this.pedirEstado();
-
+    const todoOriginal = todos[indice_modificar];
     const todosModificado = todos.map((todo, indice) => {
       if (indice === indice_modificar) {
         const todoMod: TODO = {
@@ -35,7 +37,8 @@ export class MoficarTODOs implements Comando {
       }
       return todo;
     });
-    eliminarTODO(this.ruta, todosModificado);
+    reescribirTODOs(this.ruta, todosModificado);
+    this.acciones.push({ comando: 'modificar', modificacion: todoOriginal, indice: indice_modificar })
   }
 
   async pedirTitulo() {

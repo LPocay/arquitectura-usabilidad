@@ -14,3 +14,9 @@ export type TODO = {
 export type MapComandos = {
   [key: string]: Comando
 }
+
+export type Accion = {
+  comando: string;
+  modificacion: TODO;
+  indice?: number;
+}

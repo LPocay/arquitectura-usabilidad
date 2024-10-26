@@ -1,11 +1,14 @@
 import { Comando } from './comando';
 import { pedirInputUsuario } from './consola';
-import { eliminarTODO, leerArchivo } from './util';
+import { Accion } from './types';
+import { reescribirTODOs, leerArchivo } from './util';
 
 export class EliminarTODOs implements Comando {
   ruta: string;
-  constructor(ruta: string) {
+  acciones: Accion[];
+  constructor(ruta: string, acciones: Accion[]) {
     this.ruta = ruta;
+    this.acciones = acciones;
   }
   async ejecutar(): Promise<void> {
     const todos = leerArchivo(this.ruta);
@@ -21,6 +24,7 @@ export class EliminarTODOs implements Comando {
       throw new Error("Indice invalido");
     }
     const todosModificados = todos.filter((_, i) => i !== indice_eliminar);
-    eliminarTODO(this.ruta, todosModificados);
+    reescribirTODOs(this.ruta, todosModificados);
+    this.acciones.push({ comando: 'eliminar', modificacion: todos[indice_eliminar] })
   }
 }

@@ -1,17 +1,21 @@
-import { MapComandos } from "./types"
+import { MapComandos, Accion } from "./types"
 import { VerTODOs } from "./ver-todo-comando"
 import { AgregarTODO } from "./agregar-todo-comando";
 import { EliminarTODOs } from "./eliminar-todo-comando";
-import { MoficarTODOs } from "./modificar-todo-comando";
+import { ModificarTODOs } from "./modificar-todo-comando";
+import { DeshacerComando } from "./deshacer-comando";
 import { pedirInputUsuario } from "./consola";
+
+const historialAcciones: Accion[] = [];
 
 export class App {
   private readonly ruta = 'todos.json'
   private readonly factory: MapComandos = {
     '1': new VerTODOs(this.ruta),
     '2': new AgregarTODO(this.ruta),
-    '3': new MoficarTODOs(this.ruta),
-    '4': new EliminarTODOs(this.ruta),
+    '3': new ModificarTODOs(this.ruta, historialAcciones),
+    '4': new EliminarTODOs(this.ruta, historialAcciones),
+    '5': new DeshacerComando(this.ruta, historialAcciones),
   }
   constructor() { }
 

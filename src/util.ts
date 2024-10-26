@@ -15,7 +15,7 @@ export function leerArchivo<T>(ruta: string) {
   return contenidoJson as TODO[];
 }
 
-export function escribirArchivo<T>(ruta: string, TODO: TODO): void {
+export function escribirTODO<T>(ruta: string, TODO: TODO): void {
   const data: TODO[] = leerArchivo<T>(ruta);
 
   data.push(TODO);
@@ -23,6 +23,6 @@ export function escribirArchivo<T>(ruta: string, TODO: TODO): void {
   writeFileSync(ruta, JSON.stringify(data, null, 2), 'utf-8');
 }
 
-export function eliminarTODO<T>(ruta: string, TODO: TODO[]): void {
+export function reescribirTODOs<T>(ruta: string, TODO: TODO[]): void {
   writeFileSync(ruta, JSON.stringify(TODO, null, 2), 'utf-8');
 }
