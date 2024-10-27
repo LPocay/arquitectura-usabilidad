@@ -15,3 +15,7 @@ Una de las desventajas de esta implementación es su fragilidad.
 Evaluamos guardar en memoria, pero los datos se perderían con cada reinicio de la aplicación
 
 También pensamos en usar una base de datos, pero hubiese requerido más tiempo de implementación, además de otro tipo de infraestructura.
+
+
+
+[Volver al README](../../README.md)
