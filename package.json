@@ -4,7 +4,7 @@
   "description": "TP 2",
   "main": "index.js",
   "scripts": {
-    "test": "npm run build && cucumber-js",
+    "test": "npm run build && npx cucumber-js",
     "build": "tsc",
     "start": "node ./dist/main.js",
     "dev": "npm run build && npm start"
