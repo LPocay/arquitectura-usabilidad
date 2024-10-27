@@ -4,7 +4,7 @@
   "description": "TP 2",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "npm run build && npx cucumber-js",
     "build": "tsc",
     "start": "node ./dist/main.js",
     "dev": "npm run build && npm start"
@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@cucumber/cucumber": "^11.0.1",
     "@jest/globals": "^29.7.0",
     "@types/node": "^22.7.7",
     "jest": "^29.7.0",

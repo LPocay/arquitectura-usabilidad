@@ -16,7 +16,12 @@ export type MapComandos = {
 }
 
 export type Accion = {
-  comando: string;
+  comando: AccionTipo;
   modificacion: TODO;
   indice?: number;
+}
+
+export enum AccionTipo {
+  Eliminar = 'Eliminado',
+  Modificar = 'Modificado'
 }

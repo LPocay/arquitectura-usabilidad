@@ -1,30 +1,31 @@
 import { Comando } from './comando';
 import { pedirInputUsuario } from './consola';
-import { Accion } from './types';
-import { reescribirTODOs, leerArchivo } from './util';
+import { HistorialAcciones } from './historial-acciones';
+import { AccionTipo, TODO } from './types';
 
 export class EliminarTODOs implements Comando {
-  ruta: string;
-  acciones: Accion[];
-  constructor(ruta: string, acciones: Accion[]) {
-    this.ruta = ruta;
-    this.acciones = acciones;
+  historialAcciones: HistorialAcciones;
+  constructor(acciones: HistorialAcciones) {
+    this.historialAcciones = acciones;
   }
-  async ejecutar(): Promise<void> {
-    const todos = leerArchivo(this.ruta);
+  ejecutar(todos: TODO[], indice_a_eliminar: number) {
     const totalTODOs = todos.length;
+    if (indice_a_eliminar < 0 || indice_a_eliminar > totalTODOs - 1) {
+      throw new Error("Indice invalido");
+    }
+    const todosModificados = todos.filter((_, i) => i !== indice_a_eliminar);
+    this.historialAcciones.agregar(AccionTipo.Eliminar, todos[indice_a_eliminar])
+    return todosModificados;
+  }
+
+  async mostrar(todos: TODO[]) {
     console.log('Eliminar TODO')
     console.log('-------------------------')
     todos.forEach((todo, indice) => {
       console.log(`${indice + 1}) ${todo.titulo} - ${todo.estado}`)
     })
     const indice = await pedirInputUsuario('TODO: ')
-    const indice_eliminar = parseInt(indice, 10) - 1;
-    if (indice_eliminar < 0 || indice_eliminar > totalTODOs - 1) {
-      throw new Error("Indice invalido");
-    }
-    const todosModificados = todos.filter((_, i) => i !== indice_eliminar);
-    reescribirTODOs(this.ruta, todosModificados);
-    this.acciones.push({ comando: 'eliminar', modificacion: todos[indice_eliminar] })
+    const indice_modificar = parseInt(indice, 10) - 1;
+    return indice_modificar;
   }
 }

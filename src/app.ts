@@ -1,23 +1,29 @@
-import { MapComandos, Accion } from "./types"
+import { MapComandos, TODO } from "./types"
 import { VerTODOs } from "./ver-todo-comando"
 import { AgregarTODO } from "./agregar-todo-comando";
 import { EliminarTODOs } from "./eliminar-todo-comando";
 import { ModificarTODOs } from "./modificar-todo-comando";
 import { DeshacerComando } from "./deshacer-comando";
+import { HistorialAcciones } from "./historial-acciones";
 import { pedirInputUsuario } from "./consola";
+import { leerArchivo, reescribirTODOs } from "./util";
 
-const historialAcciones: Accion[] = [];
+const historialAcciones = new HistorialAcciones();
 
 export class App {
   private readonly ruta = 'todos.json'
   private readonly factory: MapComandos = {
-    '1': new VerTODOs(this.ruta),
-    '2': new AgregarTODO(this.ruta),
-    '3': new ModificarTODOs(this.ruta, historialAcciones),
-    '4': new EliminarTODOs(this.ruta, historialAcciones),
-    '5': new DeshacerComando(this.ruta, historialAcciones),
+    '1': new VerTODOs(),
+    '2': new AgregarTODO(),
+    '3': new ModificarTODOs(historialAcciones),
+    '4': new EliminarTODOs(historialAcciones),
+    '5': new DeshacerComando(historialAcciones),
   }
-  constructor() { }
+  private todos: TODO[];
+
+  constructor() {
+    this.todos = leerArchivo(this.ruta);
+  }
 
   async ejecutar() {
     this.saludar();
@@ -37,7 +43,12 @@ export class App {
         return;
 
       }
-      await this.factory[respuesta].ejecutar();
+      const args = await this.factory[respuesta].mostrar(this.todos);
+      if (args || args === 0) {
+        const todosModificados = this.factory[respuesta].ejecutar(this.todos, args);
+        reescribirTODOs(this.ruta, todosModificados);
+        this.todos = todosModificados;
+      }
     }
   }
 
