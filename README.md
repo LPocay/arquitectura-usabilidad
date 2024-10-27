@@ -11,7 +11,7 @@ Este proyecto está diseñado para implementar y demostrar patrones de usabilida
 
 Asegúrate de tener instaladas las siguientes herramientas:
 
-- [NodeJS](https://nodejs.org/en) versión X.X o superior
+- [NodeJS](https://nodejs.org/en) versión 20.18.0
 
 ## Instalación
 
