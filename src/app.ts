@@ -1,9 +1,9 @@
 import { MapComandos, TODO } from "./types"
-import { VerTODOs } from "./ver-todo-comando"
-import { AgregarTODO } from "./agregar-todo-comando";
-import { EliminarTODOs } from "./eliminar-todo-comando";
-import { ModificarTODOs } from "./modificar-todo-comando";
-import { DeshacerComando } from "./deshacer-comando";
+import { VerTODOs } from "./comandos/ver-todo-comando"
+import { AgregarTODO } from "./comandos/agregar-todo-comando";
+import { EliminarTODOs } from "./comandos/eliminar-todo-comando";
+import { ModificarTODOs } from "./comandos/modificar-todo-comando";
+import { DeshacerComando } from "./comandos/deshacer-comando";
 import { HistorialAcciones } from "./historial-acciones";
 import { pedirInputUsuario } from "./consola";
 import { leerArchivo, reescribirTODOs } from "./util";

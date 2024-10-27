@@ -1,4 +1,4 @@
-import { Comando } from './comando';
+import { Comando } from './comandos/comando';
 
 export enum TODOEstados {
   Completo = 'Completo',

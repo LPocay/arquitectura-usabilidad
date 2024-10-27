@@ -1,7 +1,7 @@
 import { Comando } from './comando';
-import { pedirInputUsuario } from './consola';
-import { HistorialAcciones } from './historial-acciones';
-import { AccionTipo, TODO } from './types';
+import { pedirInputUsuario } from '../consola';
+import { HistorialAcciones } from '../historial-acciones';
+import { AccionTipo, TODO } from '../types';
 
 export class EliminarTODOs implements Comando {
   historialAcciones: HistorialAcciones;

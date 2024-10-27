@@ -1,7 +1,7 @@
 import { Comando } from "./comando";
-import { pedirInputUsuario } from "./consola";
-import { HistorialAcciones } from "./historial-acciones";
-import { Accion, AccionTipo, TODO } from "./types";
+import { pedirInputUsuario } from "../consola";
+import { HistorialAcciones } from "../historial-acciones";
+import { Accion, AccionTipo, TODO } from "../types";
 
 type DeshacerArgs = {
   accion: Accion,

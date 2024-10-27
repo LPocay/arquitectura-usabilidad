@@ -1,7 +1,7 @@
 import { Given, When, Then } from '@cucumber/cucumber';
 import { TODOEstados } from '../../src/types';
 import assert from 'assert';
-import { AgregarTODO } from '../../src/agregar-todo-comando';
+import { AgregarTODO } from '../../src/comandos/agregar-todo-comando';
 
 Given('El usuario sin ningun TODO', function() {
   this.todos = [];

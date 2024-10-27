@@ -1,7 +1,7 @@
 import { Given, When, Then } from '@cucumber/cucumber';
 import { TODO, TODOEstados } from '../../src/types';
 import assert from 'assert';
-import { EliminarTODOs } from '../../src/eliminar-todo-comando';
+import { EliminarTODOs } from '../../src/comandos/eliminar-todo-comando';
 import { HistorialAcciones } from '../../src/historial-acciones';
 
 Given('El usuario con un TODO guardado', async function() {

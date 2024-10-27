@@ -1,7 +1,7 @@
 import { Comando } from './comando';
-import { pedirInputUsuario } from './consola';
-import { HistorialAcciones } from './historial-acciones';
-import { AccionTipo, TODO, TODOEstados } from './types';
+import { pedirInputUsuario } from '../consola';
+import { HistorialAcciones } from '../historial-acciones';
+import { AccionTipo, TODO, TODOEstados } from '../types';
 
 type ModificarArg = {
   indice_a_modificar: number;

@@ -1,7 +1,7 @@
 import { Given, When, Then } from '@cucumber/cucumber';
 import assert from 'assert';
 import { TODO, TODOEstados } from '../../src/types';
-import { ModificarTODOs } from '../../src/modificar-todo-comando';
+import { ModificarTODOs } from '../../src/comandos/modificar-todo-comando';
 import { HistorialAcciones } from '../../src/historial-acciones';
 
 Given('El usuario con un TODO guardado que quiere modificar', function() {

@@ -1,10 +1,10 @@
 import { Given, When, Then } from '@cucumber/cucumber';
 import { TODOEstados } from '../../src/types';
 import assert from 'assert';
-import { DeshacerComando } from '../../src/deshacer-comando';
+import { DeshacerComando } from '../../src/comandos/deshacer-comando';
 import { HistorialAcciones } from '../../src/historial-acciones';
-import { EliminarTODOs } from '../../src/eliminar-todo-comando';
-import { ModificarTODOs } from '../../src/modificar-todo-comando';
+import { EliminarTODOs } from '../../src/comandos/eliminar-todo-comando';
+import { ModificarTODOs } from '../../src/comandos/modificar-todo-comando';
 
 Given('un usuario con TODOS guardados', function() {
   this.todos = [

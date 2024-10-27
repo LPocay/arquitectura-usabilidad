@@ -1,5 +1,5 @@
 import { Comando } from './comando';
-import { TODO } from './types';
+import { TODO } from '../types';
 
 export class VerTODOs implements Comando {
   ejecutar() {
