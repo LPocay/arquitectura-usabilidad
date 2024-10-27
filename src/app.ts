@@ -44,7 +44,7 @@ export class App {
 
       }
       const args = await this.factory[respuesta].mostrar(this.todos);
-      if (args) {
+      if (args || args === 0) {
         const todosModificados = this.factory[respuesta].ejecutar(this.todos, args);
         reescribirTODOs(this.ruta, todosModificados);
         this.todos = todosModificados;
