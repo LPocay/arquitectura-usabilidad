@@ -22,6 +22,6 @@ export type Accion = {
 }
 
 export enum AccionTipo {
-  Eliminar,
-  Modificar
+  Eliminar = 'Eliminado',
+  Modificar = 'Modificado'
 }

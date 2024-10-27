@@ -17,7 +17,6 @@ export class DeshacerComando implements Comando {
 
   ejecutar(todos: TODO[], { accion, indice_deshacer }: DeshacerArgs) {
     const todosModificado = this.deshacerAccion(todos, accion);
-    console.log('Tu cambio se ha hecho con exito');
     this.historialAcciones.sacarAccion(indice_deshacer);
     return todosModificado;
   }
