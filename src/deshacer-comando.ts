@@ -1,67 +1,76 @@
 import { Comando } from "./comando";
 import { pedirInputUsuario } from "./consola";
-import { Accion } from "./types";
-import { escribirTODO, leerArchivo, reescribirTODOs } from "./util";
+import { HistorialAcciones } from "./historial-acciones";
+import { Accion, AccionTipo, TODO } from "./types";
+
+type DeshacerArgs = {
+  accion: Accion,
+  indice_deshacer: number,
+}
 
 export class DeshacerComando implements Comando {
-  acciones: Accion[];
-  ruta: string;
+  historialAcciones: HistorialAcciones;
 
-  constructor(ruta: string, acciones: Accion[]) {
-    this.ruta = ruta;
-    this.acciones = acciones;
+  constructor(acciones: HistorialAcciones) {
+    this.historialAcciones = acciones;
   }
 
-  async ejecutar() {
-    if (this.acciones.length === 0) {
+  ejecutar(todos: TODO[], { accion, indice_deshacer }: DeshacerArgs) {
+    const todosModificado = this.deshacerAccion(todos, accion);
+    console.log('Tu cambio se ha hecho con exito');
+    this.historialAcciones.sacarAccion(indice_deshacer);
+    return todosModificado;
+  }
+
+  mostrar(_: TODO[]) {
+    if (this.historialAcciones.acciones.length === 0) {
       console.log('No tienes cambios para deshacer');
       return;
     }
 
-    if (this.acciones.length === 1) {
-      const accion = this.acciones[0];
-      this.deshacerAccion(accion);
-      console.log('Tu cambio se ha hecho con exito');
-      this.acciones = [];
-      return;
+    if (this.historialAcciones.acciones.length === 1) {
+      return { accion: this.historialAcciones.acciones[0], indice_deshacer: 0 };
     }
 
-    await this.mostrarCambios();
+    return this.mostrarCambios()
   }
 
   async mostrarCambios() {
     console.log('Cambios disponibles');
-    this.acciones.forEach((accion, indice) => {
-      console.log(`${indice + 1}) ${accion.comando} - ${accion.modificacion.titulo} ${accion.modificacion.estado}`)
-    });
+    this.historialAcciones.mostrar()
     const indice = await pedirInputUsuario('Cambio: ')
     const indice_deshacer = parseInt(indice, 10) - 1;
-    if (indice_deshacer < 0 || indice_deshacer > this.acciones.length - 1) {
+    if (indice_deshacer < 0 || indice_deshacer > this.historialAcciones.acciones.length - 1) {
       throw new Error("Indice invalido");
     }
 
-    const accion = this.acciones[indice_deshacer];
-    this.deshacerAccion(accion);
-    this.acciones = this.acciones.filter((_, indice) => indice !== indice_deshacer)
+    const accion = this.historialAcciones.acciones[indice_deshacer];
+    return { accion, indice_deshacer } as DeshacerArgs;
   }
 
-  deshacerEliminar(accion: Accion) {
-    escribirTODO(this.ruta, accion.modificacion);
+  deshacerEliminar(todos: TODO[], accion: Accion) {
+    const todosModificados = todos.concat(accion.modificacion);
+    return todosModificados;
   }
 
-  deshacerModificar(accion: Accion) {
-    const todos = leerArchivo(this.ruta);
-    if (accion.indice === undefined) return;
-    todos[accion.indice] = accion.modificacion;
-    reescribirTODOs(this.ruta, todos);
+  deshacerModificar(todos: TODO[], accion: Accion) {
+    if (accion.indice === undefined) return todos;
+    const todosMoficados = todos.map((todo, indice) => {
+      if (indice === accion.indice) {
+        return accion.modificacion;
+      }
+      return todo;
+    });
+    return todosMoficados;
   }
 
-  deshacerAccion(accion: Accion) {
-    if (accion.comando === 'eliminar') {
-      this.deshacerEliminar(accion)
+  deshacerAccion(todos: TODO[], accion: Accion) {
+    if (accion.comando === AccionTipo.Eliminar) {
+      return this.deshacerEliminar(todos, accion)
     }
-    if (accion.comando === 'modificar') {
-      this.deshacerModificar(accion)
+    if (accion.comando === AccionTipo.Modificar) {
+      return this.deshacerModificar(todos, accion)
     }
+    return todos;
   }
 }

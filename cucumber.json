@@ -1,0 +1,7 @@
+{
+  "default": {
+    "import": [
+      "./dist/features/step_definitions/*.js"
+    ]
+  }
+}
